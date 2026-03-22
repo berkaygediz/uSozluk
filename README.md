@@ -1,2 +1,2 @@
 # uSozluk
-Lightning-fast blocking for Ekşi Sözlük.
+block users, topics & entries on ekşi sözlük. features auto-expand, image previews and interface customization.
