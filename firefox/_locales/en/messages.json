@@ -1,0 +1,221 @@
+{
+    "app_name": {
+        "message": "uSozluk - block & tweak for ekşi sözlük"
+    },
+    "app_description": {
+        "message": "block users, topics and entries on ekşi sözlük. auto-expand content, show linked images, advanced ui settings."
+    },
+    "btn_block_user": {
+        "message": "block this user"
+    },
+    "btn_block_topic": {
+        "message": "hide this topic"
+    },
+    "btn_block_entry": {
+        "message": "hide this entry"
+    },
+    "btn_unblock": {
+        "message": "unblock"
+    },
+    "alert_user_blocked": {
+        "message": "user blocked"
+    },
+    "status_blocked": {
+        "message": "blocked"
+    },
+    "tweak_auto_expand": {
+        "message": "auto-expand content"
+    },
+    "tweak_auto_images": {
+        "message": "show images in links"
+    },
+    "popup_filtering": {
+        "message": "Filtering"
+    },
+    "popup_status": {
+        "message": "status"
+    },
+    "popup_users": {
+        "message": "users"
+    },
+    "popup_topics": {
+        "message": "topics"
+    },
+    "popup_entries": {
+        "message": "entries"
+    },
+    "popup_adaptive_tweaks": {
+        "message": "adaptive tweaks"
+    },
+    "popup_open_options": {
+        "message": "options"
+    },
+    "options_blocked_users": {
+        "message": "blocked users"
+    },
+    "options_blocked_topics": {
+        "message": "blocked topics"
+    },
+    "options_blocked_entries": {
+        "message": "blocked entries"
+    },
+    "options_show": {
+        "message": "show"
+    },
+    "options_export": {
+        "message": "📤 export"
+    },
+    "options_import": {
+        "message": "📥 import"
+    },
+    "options_clear_all": {
+        "message": "🧹 clear all"
+    },
+    "options_refresh": {
+        "message": "🔄 refresh"
+    },
+    "options_add_user": {
+        "message": "➕ add user"
+    },
+    "options_add_topic": {
+        "message": "➕ add topic"
+    },
+    "options_add_entry": {
+        "message": "➕ add entry"
+    },
+    "options_customization": {
+        "message": "Customization"
+    },
+    "options_hide_block_buttons": {
+        "message": "hide block buttons"
+    },
+    "alert_topic_blocked": {
+        "message": "topic blocked"
+    },
+    "alert_entry_blocked": {
+        "message": "entry blocked"
+    },
+    "alert_user_unblocked": {
+        "message": "user unblocked"
+    },
+    "btn_block": {
+        "message": "block"
+    },
+    "alert_duplicate_item": {
+        "message": "this item is already in the list."
+    },
+    "alert_import_success": {
+        "message": "import successful!"
+    },
+    "alert_import_invalid": {
+        "message": "invalid json file."
+    },
+    "confirm_clear": {
+        "message": "are you sure you want to delete all items?"
+    },
+    "placeholder_user": {
+        "message": "username"
+    },
+    "placeholder_topic": {
+        "message": "topic name"
+    },
+    "placeholder_entry": {
+        "message": "entry id"
+    },
+    "options_subscriptions": {
+        "message": "Subscriptions"
+    },
+    "placeholder_remote_url": {
+        "message": "remote list url (json)"
+    },
+    "options_sub_add": {
+        "message": "add"
+    },
+    "options_sub_interval": {
+        "message": "sync interval:"
+    },
+    "options_sub_10s": {
+        "message": "10 seconds (test)"
+    },
+    "options_sub_6h": {
+        "message": "6 hours"
+    },
+    "options_sub_12h": {
+        "message": "12 hours"
+    },
+    "options_sub_1d": {
+        "message": "1 day"
+    },
+    "options_sub_2d": {
+        "message": "2 days"
+    },
+    "options_sub_1w": {
+        "message": "1 week"
+    },
+    "options_sub_1m": {
+        "message": "1 month"
+    },
+    "options_sub_update_all": {
+        "message": "update now"
+    },
+    "options_sub_updating": {
+        "message": "updating..."
+    },
+    "options_sub_updated": {
+        "message": "completed!"
+    },
+    "options_sub_update_error": {
+        "message": "error!"
+    },
+    "alert_duplicate_url": {
+        "message": "this url is already added."
+    },
+    "alert_permission_denied": {
+        "message": "permission to access url denied."
+    },
+    "alert_invalid_url": {
+        "message": "invalid url format."
+    },
+    "time_never": {
+        "message": "never"
+    },
+    "time_just_now": {
+        "message": "just now"
+    },
+    "time_minutes_ago": {
+        "message": "$1 minute(s) ago"
+    },
+    "time_hours_ago": {
+        "message": "$1 hour(s) ago"
+    },
+    "time_days_ago": {
+        "message": "$1 day(s) ago"
+    },
+    "meta_updated": {
+        "message": "updated:"
+    },
+    "meta_items": {
+        "message": "items:"
+    },
+    "btn_open_url": {
+        "message": "open url"
+    },
+    "btn_update_now": {
+        "message": "update now"
+    },
+    "btn_remove": {
+        "message": "remove"
+    },
+    "options_add_all": {
+        "message": "add all"
+    },
+    "suggestion_missing_items": {
+        "message": "missing items in preloaded list: "
+    },
+    "suggestion_items_count": {
+        "message": " items found."
+    },
+    "error_loading_suggestions": {
+        "message": "error loading suggestions:"
+    }
+}

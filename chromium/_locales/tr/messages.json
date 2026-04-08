@@ -1,0 +1,221 @@
+{
+    "app_name": {
+        "message": "uSozluk - ekşi sözlük için engelleme & ince ayar"
+    },
+    "app_description": {
+        "message": "ekşi sözlük'te kullanıcı, başlık ve entry engelleme. otomatik içerik açma, görsel gösterimi ve gelişmiş arayüz ayarları."
+    },
+    "btn_block_user": {
+        "message": "bu kullanıcıyı engelle"
+    },
+    "btn_block_topic": {
+        "message": "bu başlığı gizle"
+    },
+    "btn_block_entry": {
+        "message": "bu entry'i gizle"
+    },
+    "btn_unblock": {
+        "message": "engeli kaldır"
+    },
+    "alert_user_blocked": {
+        "message": "kullanıcı engellendi"
+    },
+    "status_blocked": {
+        "message": "engelli"
+    },
+    "tweak_auto_expand": {
+        "message": "devamını otomatik aç"
+    },
+    "tweak_auto_images": {
+        "message": "linklerdeki görselleri göster"
+    },
+    "popup_filtering": {
+        "message": "Filtreleme"
+    },
+    "popup_status": {
+        "message": "durum"
+    },
+    "popup_users": {
+        "message": "kullanıcılar"
+    },
+    "popup_topics": {
+        "message": "başlıklar"
+    },
+    "popup_entries": {
+        "message": "entry'ler"
+    },
+    "popup_adaptive_tweaks": {
+        "message": "uyarlanabilir düzenlemeler"
+    },
+    "popup_open_options": {
+        "message": "seçenekler"
+    },
+    "options_blocked_users": {
+        "message": "engelli kullanıcılar"
+    },
+    "options_blocked_topics": {
+        "message": "engelli başlıklar"
+    },
+    "options_blocked_entries": {
+        "message": "engelli entry'ler"
+    },
+    "options_show": {
+        "message": "göster"
+    },
+    "options_export": {
+        "message": "📤 dışa aktar"
+    },
+    "options_import": {
+        "message": "📥 içe aktar"
+    },
+    "options_clear_all": {
+        "message": "🧹 tümünü temizle"
+    },
+    "options_refresh": {
+        "message": "🔄 yenile"
+    },
+    "options_add_user": {
+        "message": "➕ kullanıcı ekle"
+    },
+    "options_add_topic": {
+        "message": "➕ başlık ekle"
+    },
+    "options_add_entry": {
+        "message": "➕ entry ekle"
+    },
+    "options_customization": {
+        "message": "Özelleştirme"
+    },
+    "options_hide_block_buttons": {
+        "message": "engelleme butonlarını gizle"
+    },
+    "alert_topic_blocked": {
+        "message": "başlık engellendi"
+    },
+    "alert_entry_blocked": {
+        "message": "entry engellendi"
+    },
+    "alert_user_unblocked": {
+        "message": "kullanıcının engeli kaldırıldı"
+    },
+    "btn_block": {
+        "message": "engelle"
+    },
+    "alert_duplicate_item": {
+        "message": "bu öğe zaten listede mevcut."
+    },
+    "alert_import_success": {
+        "message": "içe aktarma başarılı!"
+    },
+    "alert_import_invalid": {
+        "message": "geçersiz json dosyası."
+    },
+    "confirm_clear": {
+        "message": "tüm öğeleri silmek istediğinizden emin misiniz?"
+    },
+    "placeholder_user": {
+        "message": "kullanıcı adı"
+    },
+    "placeholder_topic": {
+        "message": "başlık adı"
+    },
+    "placeholder_entry": {
+        "message": "entry id"
+    },
+    "options_subscriptions": {
+        "message": "Abonelikler"
+    },
+    "placeholder_remote_url": {
+        "message": "uzak liste url'si (json)"
+    },
+    "options_sub_add": {
+        "message": "ekle"
+    },
+    "options_sub_interval": {
+        "message": "güncelleme sıklığı:"
+    },
+    "options_sub_10s": {
+        "message": "10 saniye (test)"
+    },
+    "options_sub_6h": {
+        "message": "6 saat"
+    },
+    "options_sub_12h": {
+        "message": "12 saat"
+    },
+    "options_sub_1d": {
+        "message": "1 gün"
+    },
+    "options_sub_2d": {
+        "message": "2 gün"
+    },
+    "options_sub_1w": {
+        "message": "1 hafta"
+    },
+    "options_sub_1m": {
+        "message": "1 ay"
+    },
+    "options_sub_update_all": {
+        "message": "şimdi güncelle"
+    },
+    "options_sub_updating": {
+        "message": "güncelleniyor..."
+    },
+    "options_sub_updated": {
+        "message": "tamamlandı!"
+    },
+    "options_sub_update_error": {
+        "message": "hata!"
+    },
+    "alert_duplicate_url": {
+        "message": "bu url zaten ekli."
+    },
+    "alert_permission_denied": {
+        "message": "url'ye erişim izni verilmedi."
+    },
+    "alert_invalid_url": {
+        "message": "geçersiz url formatı."
+    },
+    "time_never": {
+        "message": "hiç"
+    },
+    "time_just_now": {
+        "message": "az önce"
+    },
+    "time_minutes_ago": {
+        "message": "$1 dakika önce"
+    },
+    "time_hours_ago": {
+        "message": "$1 saat önce"
+    },
+    "time_days_ago": {
+        "message": "$1 gün önce"
+    },
+    "meta_updated": {
+        "message": "güncelleme:"
+    },
+    "meta_items": {
+        "message": "öğe:"
+    },
+    "btn_open_url": {
+        "message": "url'yi aç"
+    },
+    "btn_update_now": {
+        "message": "şimdi güncelle"
+    },
+    "btn_remove": {
+        "message": "kaldır"
+    },
+    "options_add_all": {
+        "message": "tümünü ekle"
+    },
+    "suggestion_missing_items": {
+        "message": "önyüklü listede eklenmemiş "
+    },
+    "suggestion_items_count": {
+        "message": " öğe var."
+    },
+    "error_loading_suggestions": {
+        "message": "öneriler yüklenirken hata:"
+    }
+}

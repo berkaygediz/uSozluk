@@ -1,0 +1,221 @@
+{
+    "app_name": {
+        "message": "uSozluk - blockieren & anpassen für ekşi sözlük"
+    },
+    "app_description": {
+        "message": "benutzer, themen und einträge auf ekşi sözlük blockieren. inhalt automatisch erweitern, verlinkte bilder anzeigen, erweiterte ui-einstellungen."
+    },
+    "btn_block_user": {
+        "message": "diesen Benutzer blockieren"
+    },
+    "btn_block_topic": {
+        "message": "dieses Thema ausblenden"
+    },
+    "btn_block_entry": {
+        "message": "diesen Eintrag ausblenden"
+    },
+    "btn_unblock": {
+        "message": "Blockierung aufheben"
+    },
+    "alert_user_blocked": {
+        "message": "Benutzer blockiert"
+    },
+    "status_blocked": {
+        "message": "blockiert"
+    },
+    "tweak_auto_expand": {
+        "message": "Inhalt automatisch erweitern"
+    },
+    "tweak_auto_images": {
+        "message": "Bilder in Links anzeigen"
+    },
+    "popup_filtering": {
+        "message": "Filterung"
+    },
+    "popup_status": {
+        "message": "Status"
+    },
+    "popup_users": {
+        "message": "Benutzer"
+    },
+    "popup_topics": {
+        "message": "Themen"
+    },
+    "popup_entries": {
+        "message": "Einträge"
+    },
+    "popup_adaptive_tweaks": {
+        "message": "Anpassungen"
+    },
+    "popup_open_options": {
+        "message": "Optionen"
+    },
+    "options_blocked_users": {
+        "message": "blockierte Benutzer"
+    },
+    "options_blocked_topics": {
+        "message": "blockierte Themen"
+    },
+    "options_blocked_entries": {
+        "message": "blockierte Einträge"
+    },
+    "options_show": {
+        "message": "anzeigen"
+    },
+    "options_export": {
+        "message": "📤 exportieren"
+    },
+    "options_import": {
+        "message": "📥 importieren"
+    },
+    "options_clear_all": {
+        "message": "🧹 alle löschen"
+    },
+    "options_refresh": {
+        "message": "🔄 aktualisieren"
+    },
+    "options_add_user": {
+        "message": "➕ Benutzer hinzufügen"
+    },
+    "options_add_topic": {
+        "message": "➕ Thema hinzufügen"
+    },
+    "options_add_entry": {
+        "message": "➕ Eintrag hinzufügen"
+    },
+    "options_customization": {
+        "message": "Anpassung"
+    },
+    "options_hide_block_buttons": {
+        "message": "Block-Schaltflächen ausblenden"
+    },
+    "alert_topic_blocked": {
+        "message": "Thema blockiert"
+    },
+    "alert_entry_blocked": {
+        "message": "Eintrag blockiert"
+    },
+    "alert_user_unblocked": {
+        "message": "Blockierung des Benutzers aufgehoben"
+    },
+    "btn_block": {
+        "message": "blockieren"
+    },
+    "alert_duplicate_item": {
+        "message": "dieser Element ist bereits in der Liste."
+    },
+    "alert_import_success": {
+        "message": "Import erfolgreich!"
+    },
+    "alert_import_invalid": {
+        "message": "ungültige JSON-Datei."
+    },
+    "confirm_clear": {
+        "message": "möchten Sie wirklich alle Elemente löschen?"
+    },
+    "placeholder_user": {
+        "message": "Benutzername"
+    },
+    "placeholder_topic": {
+        "message": "Themenname"
+    },
+    "placeholder_entry": {
+        "message": "Eintrag-ID"
+    },
+    "options_subscriptions": {
+        "message": "Abonnements"
+    },
+    "placeholder_remote_url": {
+        "message": "Remote-Liste URL (JSON)"
+    },
+    "options_sub_add": {
+        "message": "hinzufügen"
+    },
+    "options_sub_interval": {
+        "message": "Aktualisierungsintervall:"
+    },
+    "options_sub_10s": {
+        "message": "10 Sekunden (Test)"
+    },
+    "options_sub_6h": {
+        "message": "6 Stunden"
+    },
+    "options_sub_12h": {
+        "message": "12 Stunden"
+    },
+    "options_sub_1d": {
+        "message": "1 Tag"
+    },
+    "options_sub_2d": {
+        "message": "2 Tage"
+    },
+    "options_sub_1w": {
+        "message": "1 Woche"
+    },
+    "options_sub_1m": {
+        "message": "1 Monat"
+    },
+    "options_sub_update_all": {
+        "message": "jetzt aktualisieren"
+    },
+    "options_sub_updating": {
+        "message": "aktualisiere..."
+    },
+    "options_sub_updated": {
+        "message": "abgeschlossen!"
+    },
+    "options_sub_update_error": {
+        "message": "Fehler!"
+    },
+    "alert_duplicate_url": {
+        "message": "diese URL ist bereits hinzugefügt."
+    },
+    "alert_permission_denied": {
+        "message": "Zugriffsberechtigung für URL verweigert."
+    },
+    "alert_invalid_url": {
+        "message": "ungültiges URL-Format."
+    },
+    "time_never": {
+        "message": "nie"
+    },
+    "time_just_now": {
+        "message": "gerade eben"
+    },
+    "time_minutes_ago": {
+        "message": "vor $1 Minute(n)"
+    },
+    "time_hours_ago": {
+        "message": "vor $1 Stunde(n)"
+    },
+    "time_days_ago": {
+        "message": "vor $1 Tag(en)"
+    },
+    "meta_updated": {
+        "message": "aktualisiert:"
+    },
+    "meta_items": {
+        "message": "Elemente:"
+    },
+    "btn_open_url": {
+        "message": "URL öffnen"
+    },
+    "btn_update_now": {
+        "message": "jetzt aktualisieren"
+    },
+    "btn_remove": {
+        "message": "entfernen"
+    },
+    "options_add_all": {
+        "message": "alle hinzufügen"
+    },
+    "suggestion_missing_items": {
+        "message": "fehlende Elemente in vorinstallierter Liste: "
+    },
+    "suggestion_items_count": {
+        "message": " Elemente gefunden."
+    },
+    "error_loading_suggestions": {
+        "message": "Fehler beim Laden der Vorschläge:"
+    }
+}
