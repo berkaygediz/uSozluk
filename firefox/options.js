@@ -16,12 +16,12 @@ function createListItem(name, onRemove) {
 }
 
 async function getStorageData(key) {
-  const data = await chrome.storage.local.get([key]);
+  const data = await browser.storage.local.get([key]);
   return data[key] || [];
 }
 
 async function setStorageData(key, value) {
-  await chrome.storage.local.set({ [key]: value });
+  await browser.storage.local.set({ [key]: value });
 }
 
 async function loadBlockedUsers() {
@@ -29,7 +29,7 @@ async function loadBlockedUsers() {
   const userList = document.getElementById("userList");
   const userTitle = document.getElementById("userTitle");
 
-  const titleBase = chrome.i18n.getMessage("options_blocked_users");
+  const titleBase = browser.i18n.getMessage("options_blocked_users");
   userTitle.textContent = `${titleBase} (${users.length})`;
   userList.innerHTML = "";
 
@@ -52,7 +52,7 @@ async function loadBlockedTopics() {
   const topicList = document.getElementById("topicList");
   const topicTitle = document.getElementById("topicTitle");
 
-  const titleBase = chrome.i18n.getMessage("options_blocked_topics");
+  const titleBase = browser.i18n.getMessage("options_blocked_topics");
   topicTitle.textContent = `${titleBase} (${topics.length})`;
   topicList.innerHTML = "";
 
@@ -73,7 +73,7 @@ async function loadBlockedEntries() {
   const entryList = document.getElementById("entryList");
   const entryTitle = document.getElementById("entryTitle");
 
-  const titleBase = chrome.i18n.getMessage("options_blocked_entries");
+  const titleBase = browser.i18n.getMessage("options_blocked_entries");
   entryTitle.textContent = `${titleBase} (${entries.length})`;
   entryList.innerHTML = "";
 
@@ -97,7 +97,7 @@ async function addItem(storageKey, inputId) {
   const list = await getStorageData(storageKey);
 
   if (list.some((item) => normalize(item) === normalize(newItem))) {
-    alert(chrome.i18n.getMessage("alert_duplicate_item"));
+    alert(browser.i18n.getMessage("alert_duplicate_item"));
     input.value = "";
     return;
   }
@@ -152,16 +152,16 @@ async function importList(storageKey) {
       else if (storageKey === "blockedTopics") loadBlockedTopics();
       else loadBlockedEntries();
 
-      alert(chrome.i18n.getMessage("alert_import_success"));
+      alert(browser.i18n.getMessage("alert_import_success"));
     } catch (err) {
-      alert(chrome.i18n.getMessage("alert_import_invalid"));
+      alert(browser.i18n.getMessage("alert_import_invalid"));
     }
   };
   input.click();
 }
 
 async function clearList(storageKey) {
-  if (confirm(chrome.i18n.getMessage("confirm_clear"))) {
+  if (confirm(browser.i18n.getMessage("confirm_clear"))) {
     await setStorageData(storageKey, []);
     if (storageKey === "blockedUsers") loadBlockedUsers();
     else if (storageKey === "blockedTopics") loadBlockedTopics();
@@ -212,7 +212,7 @@ function toggleEntriesSection(show) {
 
 async function loadUserSuggestions(currentUsers) {
   try {
-    const url = chrome.runtime.getURL(
+    const url = browser.runtime.getURL(
       "lists/berkaygediz-universal-blocklist-eksi-sozluk.json",
     );
     const response = await fetch(url);
@@ -262,8 +262,8 @@ function timeAgo(timestamp) {
 }
 
 function i18n(key, substitutions) {
-  if (typeof chrome !== "undefined" && chrome.i18n) {
-    return chrome.i18n.getMessage(key, substitutions) || key;
+  if (typeof chrome !== "undefined" && browser.i18n) {
+    return browser.i18n.getMessage(key, substitutions) || key;
   }
   return key;
 }
@@ -272,12 +272,16 @@ const openSvg = `<svg viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5a2 2 0 0 0-2 
 const syncSvg = `<svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>`;
 const removeSvg = `<svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`;
 
+let cachedSubscriptionUrls = [];
+
 function renderSubscriptions() {
-  chrome.storage.local.get(
+  browser.storage.local.get(
     ["remoteSubscriptions", "syncIntervalMinutes"],
     (result) => {
       const subs = result.remoteSubscriptions || [];
       const syncIntervalSelect = document.getElementById("syncIntervalSelect");
+
+      cachedSubscriptionUrls = subs.map((s) => s.url);
 
       if (
         result.syncIntervalMinutes !== undefined &&
@@ -325,7 +329,7 @@ function renderSubscriptions() {
         syncBtn.title = i18n("btn_update_now");
         syncBtn.onclick = async () => {
           syncBtn.style.color = "#ffc503";
-          chrome.runtime.sendMessage(
+          browser.runtime.sendMessage(
             { action: "syncUrl", url: sub.url },
             (res) => {
               syncBtn.style.color = res?.success ? "#8bc34a" : "#d9534f";
@@ -340,7 +344,7 @@ function renderSubscriptions() {
         removeBtn.title = i18n("btn_remove");
         removeBtn.onclick = async () => {
           const updatedSubs = subs.filter((s) => s.url !== sub.url);
-          await chrome.storage.local.set({ remoteSubscriptions: updatedSubs });
+          await browser.storage.local.set({ remoteSubscriptions: updatedSubs });
           renderSubscriptions();
         };
 
@@ -362,58 +366,60 @@ function renderSubscriptions() {
 
 function setupEventListeners() {
   const translations = {
-    userTitle: chrome.i18n.getMessage("options_blocked_users"),
-    topicTitle: chrome.i18n.getMessage("options_blocked_topics"),
-    entryTitle: chrome.i18n.getMessage("options_blocked_entries"),
+    userTitle: browser.i18n.getMessage("options_blocked_users"),
+    topicTitle: browser.i18n.getMessage("options_blocked_topics"),
+    entryTitle: browser.i18n.getMessage("options_blocked_entries"),
 
-    showUsersBtn: chrome.i18n.getMessage("options_show"),
-    showTopicsBtn: chrome.i18n.getMessage("options_show"),
-    showEntriesBtn: chrome.i18n.getMessage("options_show"),
+    showUsersBtn: browser.i18n.getMessage("options_show"),
+    showTopicsBtn: browser.i18n.getMessage("options_show"),
+    showEntriesBtn: browser.i18n.getMessage("options_show"),
 
-    exportUsersBtn: chrome.i18n.getMessage("options_export"),
-    importUsersBtn: chrome.i18n.getMessage("options_import"),
-    clearUsersBtn: chrome.i18n.getMessage("options_clear_all"),
-    refreshUsersBtn: chrome.i18n.getMessage("options_refresh"),
-    addUserBtn: chrome.i18n.getMessage("options_add_user"),
+    exportUsersBtn: browser.i18n.getMessage("options_export"),
+    importUsersBtn: browser.i18n.getMessage("options_import"),
+    clearUsersBtn: browser.i18n.getMessage("options_clear_all"),
+    refreshUsersBtn: browser.i18n.getMessage("options_refresh"),
+    addUserBtn: browser.i18n.getMessage("options_add_user"),
 
-    exportTopicsBtn: chrome.i18n.getMessage("options_export"),
-    importTopicsBtn: chrome.i18n.getMessage("options_import"),
-    clearTopicsBtn: chrome.i18n.getMessage("options_clear_all"),
-    refreshTopicsBtn: chrome.i18n.getMessage("options_refresh"),
-    addTopicBtn: chrome.i18n.getMessage("options_add_topic"),
+    exportTopicsBtn: browser.i18n.getMessage("options_export"),
+    importTopicsBtn: browser.i18n.getMessage("options_import"),
+    clearTopicsBtn: browser.i18n.getMessage("options_clear_all"),
+    refreshTopicsBtn: browser.i18n.getMessage("options_refresh"),
+    addTopicBtn: browser.i18n.getMessage("options_add_topic"),
 
-    exportEntriesBtn: chrome.i18n.getMessage("options_export"),
-    importEntriesBtn: chrome.i18n.getMessage("options_import"),
-    clearEntriesBtn: chrome.i18n.getMessage("options_clear_all"),
-    refreshEntriesBtn: chrome.i18n.getMessage("options_refresh"),
-    addEntryBtn: chrome.i18n.getMessage("options_add_entry"),
+    exportEntriesBtn: browser.i18n.getMessage("options_export"),
+    importEntriesBtn: browser.i18n.getMessage("options_import"),
+    clearEntriesBtn: browser.i18n.getMessage("options_clear_all"),
+    refreshEntriesBtn: browser.i18n.getMessage("options_refresh"),
+    addEntryBtn: browser.i18n.getMessage("options_add_entry"),
 
-    customizationTitle: chrome.i18n.getMessage("options_customization"),
-    hideBlockButtonsLabel: chrome.i18n.getMessage("options_hide_block_buttons"),
-    autoExpandLabel: chrome.i18n.getMessage("tweak_auto_expand"),
-    autoImagesLabel: chrome.i18n.getMessage("tweak_auto_images"),
+    customizationTitle: browser.i18n.getMessage("options_customization"),
+    hideBlockButtonsLabel: browser.i18n.getMessage(
+      "options_hide_block_buttons",
+    ),
+    autoExpandLabel: browser.i18n.getMessage("tweak_auto_expand"),
+    autoImagesLabel: browser.i18n.getMessage("tweak_auto_images"),
 
-    userInput: chrome.i18n.getMessage("placeholder_user"),
-    topicInput: chrome.i18n.getMessage("placeholder_topic"),
-    entryInput: chrome.i18n.getMessage("placeholder_entry"),
+    userInput: browser.i18n.getMessage("placeholder_user"),
+    topicInput: browser.i18n.getMessage("placeholder_topic"),
+    entryInput: browser.i18n.getMessage("placeholder_entry"),
 
-    subTitle: chrome.i18n.getMessage("options_subscriptions"),
-    subUrlInput: chrome.i18n.getMessage("placeholder_remote_url"),
-    addSubBtnText: chrome.i18n.getMessage("options_sub_add"),
-    intervalLabel: chrome.i18n.getMessage("options_sub_interval"),
-    updateAllBtnText: chrome.i18n.getMessage("options_sub_update_all"),
+    subTitle: browser.i18n.getMessage("options_subscriptions"),
+    subUrlInput: browser.i18n.getMessage("placeholder_remote_url"),
+    addSubBtnText: browser.i18n.getMessage("options_sub_add"),
+    intervalLabel: browser.i18n.getMessage("options_sub_interval"),
+    updateAllBtnText: browser.i18n.getMessage("options_sub_update_all"),
 
-    optUsers: chrome.i18n.getMessage("popup_users"),
-    optTopics: chrome.i18n.getMessage("popup_topics"),
-    optEntries: chrome.i18n.getMessage("popup_entries"),
+    optUsers: browser.i18n.getMessage("popup_users"),
+    optTopics: browser.i18n.getMessage("popup_topics"),
+    optEntries: browser.i18n.getMessage("popup_entries"),
 
-    opt10s: chrome.i18n.getMessage("options_sub_10s"),
-    opt6h: chrome.i18n.getMessage("options_sub_6h"),
-    opt12h: chrome.i18n.getMessage("options_sub_12h"),
-    opt1d: chrome.i18n.getMessage("options_sub_1d"),
-    opt2d: chrome.i18n.getMessage("options_sub_2d"),
-    opt1w: chrome.i18n.getMessage("options_sub_1w"),
-    opt1m: chrome.i18n.getMessage("options_sub_1m"),
+    opt10s: browser.i18n.getMessage("options_sub_10s"),
+    opt6h: browser.i18n.getMessage("options_sub_6h"),
+    opt12h: browser.i18n.getMessage("options_sub_12h"),
+    opt1d: browser.i18n.getMessage("options_sub_1d"),
+    opt2d: browser.i18n.getMessage("options_sub_2d"),
+    opt1w: browser.i18n.getMessage("options_sub_1w"),
+    opt1m: browser.i18n.getMessage("options_sub_1m"),
   };
 
   for (const [id, text] of Object.entries(translations)) {
@@ -512,54 +518,55 @@ function setupEventListeners() {
     const type = subTypeSelect.value;
     if (!url) return;
 
+    let urlObj;
     try {
-      const urlObj = new URL(url);
-      const hasPermission = await chrome.permissions.contains({
-        origins: [`${urlObj.origin}/*`],
-      });
-
-      if (!hasPermission) {
-        const granted = await chrome.permissions.request({
-          origins: [`${urlObj.origin}/*`],
-        });
-
-        if (!granted) {
-          alert(i18n("alert_permission_denied"));
-          return;
-        }
-      }
+      urlObj = new URL(url);
     } catch (err) {
-      console.error("Permission error:", err);
       alert(i18n("alert_invalid_url"));
       return;
     }
 
-    const { remoteSubscriptions } = await chrome.storage.local.get(
+    try {
+      const granted = await browser.permissions.request({
+        origins: [`${urlObj.origin}/*`],
+      });
+
+      if (!granted) {
+        alert(i18n("alert_permission_denied"));
+        return;
+      }
+    } catch (err) {
+      console.error("Permission error:", err);
+      alert(i18n("alert_permission_denied"));
+      return;
+    }
+
+    const { remoteSubscriptions } = await browser.storage.local.get(
       "remoteSubscriptions",
     );
     const subs = remoteSubscriptions || [];
 
     if (subs.some((s) => s.url === url)) {
-      alert(chrome.i18n.getMessage("alert_duplicate_url"));
+      alert(browser.i18n.getMessage("alert_duplicate_url"));
       return;
     }
 
     subs.push({ url, type, lastSync: 0, count: 0, data: [] });
-    await chrome.storage.local.set({ remoteSubscriptions: subs });
+    await browser.storage.local.set({ remoteSubscriptions: subs });
     subUrlInput.value = "";
 
     renderSubscriptions();
 
-    chrome.runtime.sendMessage({ action: "syncUrl", url }, () =>
+    browser.runtime.sendMessage({ action: "syncUrl", url }, () =>
       renderSubscriptions(),
     );
   });
 
   syncIntervalSelect.addEventListener("change", async () => {
     const interval = parseFloat(syncIntervalSelect.value);
-    await chrome.storage.local.set({ syncIntervalMinutes: interval });
+    await browser.storage.local.set({ syncIntervalMinutes: interval });
 
-    chrome.runtime.sendMessage(
+    browser.runtime.sendMessage(
       {
         action: "setSyncInterval",
         intervalMinutes: interval,
@@ -577,41 +584,46 @@ function setupEventListeners() {
   updateAllBtn.addEventListener("click", async () => {
     const originalText = updateAllBtnText.textContent;
 
+    if (cachedSubscriptionUrls.length > 0) {
+      const uniqueOrigins = [
+        ...new Set(
+          cachedSubscriptionUrls
+            .map((s) => {
+              try {
+                return new URL(s).origin + "/*";
+              } catch {
+                return null;
+              }
+            })
+            .filter(Boolean),
+        ),
+      ];
+
+      try {
+        const granted = await browser.permissions.request({
+          origins: uniqueOrigins,
+        });
+
+        if (!granted) {
+          alert(i18n("alert_permission_denied"));
+          return;
+        }
+      } catch (err) {
+        console.error("Permission error:", err);
+        alert(i18n("alert_permission_denied"));
+        return;
+      }
+    }
+
     updateAllBtnText.textContent = i18n("options_sub_updating");
     updateAllBtn.disabled = true;
     updateAllBtn.style.opacity = "0.6";
 
     try {
-      const { remoteSubscriptions } = await chrome.storage.local.get(
-        "remoteSubscriptions",
-      );
-      const subs = remoteSubscriptions || [];
-
-      if (subs.length > 0) {
-        const uniqueOrigins = [
-          ...new Set(
-            subs
-              .map((s) => {
-                try {
-                  return new URL(s.url).origin + "/*";
-                } catch {
-                  return null;
-                }
-              })
-              .filter(Boolean),
-          ),
-        ];
-
-        const granted = await chrome.permissions.request({
-          origins: uniqueOrigins,
-        });
-        if (!granted) throw new Error("Permission denied");
-      }
-
       const response = await new Promise((resolve, reject) => {
-        chrome.runtime.sendMessage({ action: "syncAll" }, (res) => {
-          if (chrome.runtime.lastError)
-            reject(new Error(chrome.runtime.lastError.message));
+        browser.runtime.sendMessage({ action: "syncAll" }, (res) => {
+          if (browser.runtime.lastError)
+            reject(new Error(browser.runtime.lastError.message));
           else resolve(res);
         });
       });
@@ -653,16 +665,16 @@ document.addEventListener("DOMContentLoaded", () => {
   function setupToggle(toggleId, storageKey, defaultValue = false) {
     const toggle = document.getElementById(toggleId);
     if (toggle) {
-      chrome.storage.local.get([storageKey], (data) => {
+      browser.storage.local.get([storageKey], (data) => {
         toggle.checked = data[storageKey] ?? defaultValue;
       });
 
       toggle.addEventListener("change", async () => {
-        await chrome.storage.local.set({ [storageKey]: toggle.checked });
+        await browser.storage.local.set({ [storageKey]: toggle.checked });
       });
     }
 
-    chrome.storage.onChanged.addListener((changes, areaName) => {
+    browser.storage.onChanged.addListener((changes, areaName) => {
       if (areaName === "local" && changes.remoteSubscriptions) {
         renderSubscriptions();
       }

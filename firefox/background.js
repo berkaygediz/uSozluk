@@ -1,11 +1,11 @@
 let syncIntervalTimer = null;
 
-chrome.storage.local.get(["syncIntervalMinutes"], (data) => {
+browser.storage.local.get(["syncIntervalMinutes"], (data) => {
   const interval = data.syncIntervalMinutes || 1440;
   setupSyncInterval(interval);
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
   try {
     if (request.action === "fetchUrl") {
       const url = request.url;
@@ -91,7 +91,7 @@ function setupSyncInterval(intervalMinutes) {
     syncIntervalTimer = null;
   }
 
-  chrome.alarms.clear("syncRemoteLists");
+  browser.alarms.clear("syncRemoteLists");
 
   const intervalMs = intervalMinutes * 60 * 1000;
 
@@ -102,13 +102,13 @@ function setupSyncInterval(intervalMinutes) {
 
     setTimeout(() => syncAllLists(), 5000);
   } else {
-    chrome.alarms.create("syncRemoteLists", {
+    browser.alarms.create("syncRemoteLists", {
       periodInMinutes: Math.ceil(intervalMinutes),
       delayInMinutes: Math.ceil(intervalMinutes),
     });
   }
 
-  chrome.storage.local.set({
+  browser.storage.local.set({
     lastIntervalSet: Date.now(),
     syncIntervalMinutes: intervalMinutes,
   });
@@ -119,7 +119,7 @@ function getCurrentIntervalMs() {
 }
 
 async function syncSingleList(targetUrl) {
-  const { remoteSubscriptions } = await chrome.storage.local.get(
+  const { remoteSubscriptions } = await browser.storage.local.get(
     "remoteSubscriptions",
   );
   const subs = remoteSubscriptions || [];
@@ -143,7 +143,7 @@ async function syncSingleList(targetUrl) {
     subs[subIndex].data = data;
     subs[subIndex].lastSync = Date.now();
     subs[subIndex].count = data.length;
-    await chrome.storage.local.set({ remoteSubscriptions: subs });
+    await browser.storage.local.set({ remoteSubscriptions: subs });
 
     return true;
   } catch (e) {
@@ -151,7 +151,7 @@ async function syncSingleList(targetUrl) {
   }
 }
 async function syncAllLists() {
-  const { remoteSubscriptions } = await chrome.storage.local.get(
+  const { remoteSubscriptions } = await browser.storage.local.get(
     "remoteSubscriptions",
   );
 
@@ -179,7 +179,7 @@ async function syncAllLists() {
     }
   }
 
-  await chrome.storage.local.set({ lastIntervalSet: Date.now() });
+  await browser.storage.local.set({ lastIntervalSet: Date.now() });
 
   return {
     success: true,
@@ -190,7 +190,7 @@ async function syncAllLists() {
   };
 }
 
-chrome.alarms.onAlarm.addListener((alarm) => {
+browser.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === "syncRemoteLists") {
     syncAllLists();
   }
