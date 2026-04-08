@@ -15,6 +15,36 @@ function createListItem(name, onRemove) {
   return li;
 }
 
+function createSvgElement(svgString) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(svgString, "text/html");
+  const svgNode = doc.body.querySelector("svg");
+  return document.importNode(svgNode, true);
+}
+
+function clearElement(element) {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+}
+
+async function requestPermissions(permissions) {
+  if (
+    !browser.permissions ||
+    typeof browser.permissions.request !== "function"
+  ) {
+    console.warn("permissions.request not supported, assuming granted");
+    return true;
+  }
+
+  try {
+    return await browser.permissions.request(permissions);
+  } catch (err) {
+    console.error("Permission request error:", err);
+    return false;
+  }
+}
+
 async function getStorageData(key) {
   const data = await browser.storage.local.get([key]);
   return data[key] || [];
@@ -31,7 +61,7 @@ async function loadBlockedUsers() {
 
   const titleBase = browser.i18n.getMessage("options_blocked_users");
   userTitle.textContent = `${titleBase} (${users.length})`;
-  userList.innerHTML = "";
+  clearElement(userList);
 
   const fragment = document.createDocumentFragment();
   users.forEach((name) => {
@@ -54,7 +84,7 @@ async function loadBlockedTopics() {
 
   const titleBase = browser.i18n.getMessage("options_blocked_topics");
   topicTitle.textContent = `${titleBase} (${topics.length})`;
-  topicList.innerHTML = "";
+  clearElement(topicList);
 
   const fragment = document.createDocumentFragment();
   topics.forEach((name) => {
@@ -75,7 +105,7 @@ async function loadBlockedEntries() {
 
   const titleBase = browser.i18n.getMessage("options_blocked_entries");
   entryTitle.textContent = `${titleBase} (${entries.length})`;
-  entryList.innerHTML = "";
+  clearElement(entryList);
 
   const fragment = document.createDocumentFragment();
   entries.forEach((id) => {
@@ -262,7 +292,7 @@ function timeAgo(timestamp) {
 }
 
 function i18n(key, substitutions) {
-  if (typeof chrome !== "undefined" && browser.i18n) {
+  if (typeof browser !== "undefined" && browser.i18n) {
     return browser.i18n.getMessage(key, substitutions) || key;
   }
   return key;
@@ -291,7 +321,8 @@ function renderSubscriptions() {
       }
 
       const subListEl = document.getElementById("subList");
-      subListEl.innerHTML = "";
+      clearElement(subListEl);
+
       const fragment = document.createDocumentFragment();
 
       subs.forEach((sub) => {
@@ -307,7 +338,15 @@ function renderSubscriptions() {
 
         const metaRow = document.createElement("div");
         metaRow.className = "sub-meta";
-        metaRow.innerHTML = `<span>${i18n("meta_updated")} ${timeAgo(sub.lastSync)}</span><span>${i18n("meta_items")} ${sub.count || 0}</span>`;
+
+        const updatedSpan = document.createElement("span");
+        updatedSpan.textContent = `${i18n("meta_updated")} ${timeAgo(sub.lastSync)}`;
+
+        const itemsSpan = document.createElement("span");
+        itemsSpan.textContent = `${i18n("meta_items")} ${sub.count || 0}`;
+
+        metaRow.appendChild(updatedSpan);
+        metaRow.appendChild(itemsSpan);
 
         info.appendChild(urlSpan);
         info.appendChild(metaRow);
@@ -320,12 +359,12 @@ function renderSubscriptions() {
         actions.className = "sub-actions";
 
         const openBtn = document.createElement("button");
-        openBtn.innerHTML = openSvg;
+        openBtn.appendChild(createSvgElement(openSvg));
         openBtn.title = i18n("btn_open_url");
         openBtn.onclick = () => window.open(sub.url, "_blank");
 
         const syncBtn = document.createElement("button");
-        syncBtn.innerHTML = syncSvg;
+        syncBtn.appendChild(createSvgElement(syncSvg));
         syncBtn.title = i18n("btn_update_now");
         syncBtn.onclick = async () => {
           syncBtn.style.color = "#ffc503";
@@ -340,7 +379,7 @@ function renderSubscriptions() {
 
         const removeBtn = document.createElement("button");
         removeBtn.className = "remove-btn";
-        removeBtn.innerHTML = removeSvg;
+        removeBtn.appendChild(createSvgElement(removeSvg));
         removeBtn.title = i18n("btn_remove");
         removeBtn.onclick = async () => {
           const updatedSubs = subs.filter((s) => s.url !== sub.url);
@@ -526,17 +565,11 @@ function setupEventListeners() {
       return;
     }
 
-    try {
-      const granted = await browser.permissions.request({
-        origins: [`${urlObj.origin}/*`],
-      });
+    const granted = await requestPermissions({
+      origins: [`${urlObj.origin}/*`],
+    });
 
-      if (!granted) {
-        alert(i18n("alert_permission_denied"));
-        return;
-      }
-    } catch (err) {
-      console.error("Permission error:", err);
+    if (!granted) {
       alert(i18n("alert_permission_denied"));
       return;
     }
@@ -599,17 +632,11 @@ function setupEventListeners() {
         ),
       ];
 
-      try {
-        const granted = await browser.permissions.request({
-          origins: uniqueOrigins,
-        });
+      const granted = await requestPermissions({
+        origins: uniqueOrigins,
+      });
 
-        if (!granted) {
-          alert(i18n("alert_permission_denied"));
-          return;
-        }
-      } catch (err) {
-        console.error("Permission error:", err);
+      if (!granted) {
         alert(i18n("alert_permission_denied"));
         return;
       }
