@@ -9,7 +9,7 @@ With uSozluk, you can block users, titles, and entries, view images within entri
 ## Install
 
 - [Chrome Web Store](https://chromewebstore.google.com/detail/igblepkjbdkflahkbjebobenplojogfm)
-- [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/-)
+- [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/mmfomenpccnkidpnlfcdfigbcjifejjl)
 - [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/usozluk/)
 
 ## Features
